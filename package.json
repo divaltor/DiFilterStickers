@@ -1,0 +1,22 @@
+{
+  "name": "filter_sticker",
+  "version": "1.0.0",
+  "description": "Bot for delete stickers from groups in filter list",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "connect": "node database/connection.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Divaltor/DiFilterStickers.git"
+  },
+  "keywords": [],
+  "author": "Divaltor",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "mongoose": "^5.6.4",
+    "telegraf": "^3.30.1"
+  }
+}
