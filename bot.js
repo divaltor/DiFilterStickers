@@ -24,3 +24,4 @@ bot.command('add', handleAddStickerAdmin);
 bot.command('add', handleAddStickerUser);
 
 bot.launch();
+console.log('Bot is started');

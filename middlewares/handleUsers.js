@@ -8,7 +8,6 @@ module.exports = async (ctx, next) => {
         const user = await db.User.getData(ctx);
         if (user.stickers.includes(ctx.message.sticker.file_id)) {
             telegram.deleteMessage(ctx.chat.id, ctx.message.message_id);
-
         }
     }
     return next()
