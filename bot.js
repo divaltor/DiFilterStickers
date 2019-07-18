@@ -1,13 +1,22 @@
 const Telegraf = require('telegraf');
+const { Composer } = Telegraf;
 const db = require('./database');
-const handleUsers = require('./middlewares');
 const {
-    handleStart,
+    handleUsers,
+    checkPerformance,
+}= require('./middlewares');
+
+const {
     handleAddStickerAdmin,
     handleAddStickerUser
 } = require('./handlers');
 
-const { performance } = require('perf_hooks');
+const {
+    limitAddConfig,
+    limitStickerConfig
+} = require('./configs');
+
+const rateLimit = require('telegraf-ratelimit');
 
 const bot = new Telegraf(process.env.TOKEN);
 
@@ -17,19 +26,15 @@ bot.telegram.getMe().then((botInfo) => {
 
 bot.context.db = db;
 
-bot.use(handleUsers);
-bot.use(async (ctx, next) => {
-    const date = performance.now();
-    await next();
-    const res = performance.now() - date;
-    console.log(`Response time: ${res}`);
+bot.use(checkPerformance);
+
+bot.on('sticker', rateLimit(limitStickerConfig), Composer.groupChat(handleUsers));
+
+bot.command('add', Composer.admin(handleAddStickerAdmin));
+
+bot.command('add', rateLimit(limitAddConfig), Composer.groupChat(handleAddStickerUser));
+
+
+bot.launch().then(() => {
+    console.log('Bot is started')
 });
-
-bot.start(handleStart);
-
-bot.command('add', handleAddStickerAdmin);
-
-bot.command('add', handleAddStickerUser);
-
-bot.launch();
-console.log('Bot is started');
