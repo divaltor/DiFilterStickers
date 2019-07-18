@@ -1,12 +1,14 @@
 module.exports = async (ctx, next) => {
     if (['supergroup', 'group'].includes(ctx.chat.type)) {
-        const chatMember = await ctx.telegram.getChatMember(
-            ctx.chat.id,
-            ctx.from.id
-        ).catch(console.log);
+        let chatMember;
+        try {
+            chatMember = await ctx.getChatMember(ctx.from.id);
+        } catch (e) {
+            console.log(e);
+        }
 
         if (chatMember && ['creator', 'administrator'].includes(chatMember.status)) {
-            return await next()
+            await next()
         }
     }
 };

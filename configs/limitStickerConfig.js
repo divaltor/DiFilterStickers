@@ -3,7 +3,7 @@ module.exports = {
     limit: 3,
     onLimitExceeded: async (ctx, next) => {
         try {
-            await ctx.telegram.restrictChatMember(ctx.chat.id, ctx.from.id, {
+            await ctx.restrictChatMember(ctx.from.id, {
                 until_date: Math.floor(Date.now() / 1000 + 300),
                 can_send_messages: true,
                 can_send_media_messages: true,
@@ -15,7 +15,7 @@ module.exports = {
         }
 
         try {
-            ctx.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id)
+            await ctx.deleteMessage(ctx.message.message_id)
         }
         catch (e) {
             console.log(e);

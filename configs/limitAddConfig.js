@@ -3,7 +3,7 @@ module.exports = {
     limit: 3,
     onLimitExceeded: async (ctx, next) => {
         try {
-            await ctx.telegram.restrictChatMember(ctx.chat.id, ctx.from.id, {
+            await ctx.restrictChatMember(ctx.from.id, {
                 until_date: Math.floor(Date.now() / 1000 + 600),
                 can_send_messages: false,
                 can_send_media_message: false,

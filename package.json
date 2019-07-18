@@ -1,6 +1,6 @@
 {
   "name": "filter_sticker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Bot for delete stickers from groups in filter list",
   "main": "index.js",
   "scripts": {
