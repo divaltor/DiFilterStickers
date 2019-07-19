@@ -13,7 +13,8 @@ const {
 
 const {
     limitAddConfig,
-    limitStickerConfig
+    limitStickerConfig,
+    limitConifg
 } = require('./configs');
 
 const rateLimit = require('telegraf-ratelimit');
@@ -27,6 +28,7 @@ bot.telegram.getMe().then((botInfo) => {
 bot.context.db = db;
 
 bot.use(checkPerformance);
+bot.use(rateLimit(limitConifg));
 
 bot.on('sticker', rateLimit(limitStickerConfig), Composer.groupChat(handleUsers));
 
